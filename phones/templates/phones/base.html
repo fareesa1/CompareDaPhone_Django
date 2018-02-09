@@ -1,0 +1,48 @@
+<!--loading bootstrap3 library-->
+{% load bootstrap3 %}
+{% load static %}
+
+<!--declare file as HTML in english -->
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<!--include a title element which will be displayed in the title bar of the browser -->
+		<title>CompareDaPhone</title>
+		
+		<!-- include all Bootstrap style and js files from django-boostrap3 -->
+		{% bootstrap_css %}
+		{% bootstrap_javascript %}
+		
+		<!-- include your custom javascript and css files -->
+		<script src="{% static 'js/main.js' %}"></script>
+		<link rel="stylesheet" href="{% static 'css/styleMaster.css' %}" type="text/css" />
+	</head>
+	
+	<body>
+		<!--this is the navbar; we use navbar-default and navbar-static-top selectors to define style -->
+		<nav class="navbar navbar-default navbar-static-top">
+			<div class="container">
+				<!--the brand logo-->
+				<div class="navbar-header">
+					<a href="{% url 'phones:index' %}" class="navbar-brand"><img src="{% static 'img/logo.png' %}"></a>
+				</div>
+				<!-- buttons at the right of the navbar-->
+				<div class="navbar-right">
+					<!--feedback button-->
+					<a href="{% url 'feedback:form_input' %}" class="btn btn-default navbar-right goStart">
+						<span>Feedback</span>
+					</a>
+				</div>
+			</div>
+		</nav>
+			<!-- the main part of the page -->
+		<div class="container">
+			<!-- this is where the actual content of the templates comes in -->
+			{% block content %}{% endblock content %}
+		</div>
+	</body>
+

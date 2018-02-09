@@ -1,0 +1,179 @@
+{% extends "phones/base.html" %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+	<!--create a django form that renders each field individually
+	and manually in the appropriate html element -->
+	<form action="{% url 'phones:index' %}" method='post'>
+		{% csrf_token %}
+		<!--returns the list of errors that aren't associated with particular field
+		ht	tps://docs.djangoproject.com/en/1.11/ref/forms/api/#django.forms.Form.non_field_errors
+		-->
+		{{ form.non_field_errors }}
+		
+		<!--wrap the questionnaire into a carousel -->
+		<div id="questionCarousel" class="carousel carousel-fade" data-ride="carousel" data-interval="false">
+			<!--beginning of inner carousel -->
+			<div class="carousel-inner">								
+				<!-- carousel item #1 - budget -->
+				<div class="active item" id="phoneBudgetQ">
+					<!--each question has a panel-->
+					<div class="panel panel-default">
+						<!-- panel-heading that stores the question -->
+						<div class="panel-heading">
+							What is your budget?
+						</div>
+						<!--end of panel-heading-->
+						
+						<!-- panel-body that stores the answer -->
+						<div class="panel-body">
+							{{ form.price.errors }}
+							{{ form.price }}
+							<!--navigation button -->
+							<button type="button" class="next-button btn btn-success" data-target="#questionCarousel" data-slide-to="1">Next</button>
+							<!--end of nav button -->
+						</div>
+						<!--end of panel-body -->				
+					</div>
+				</div>
+				<!-- end of item #1 -->
+
+				<!-- carousel item #2 - usage -->
+				<div class="item" id="phonePrefQ">
+					<!--each question has a panel-->
+					<div class="panel panel-default">
+						<!-- panel-heading that stores the question -->
+						<div class="panel-heading">
+							What do you mostly use your phone for?
+						</div>
+						<!--end of panel-heading-->
+						
+						<!-- panel-body that stores the answer -->
+						<div class="panel-body">					
+							<!-- grouped the options together with submit button in a table.
+							this helps me lay out the 4 options in a 2x2 format with the
+							next button at the bottom
+							-->
+							<table>
+								<tr class="col-md-12">
+									<!--options with bootstrap col-md-6 class-->
+									<td class="col-md-6">
+										{{ form.photo_video.errors }}
+										<label class="btn btn-primary" role="button" for="{{ form.photo_video.id_for_label }}">Taking Photos / Videos</label>
+										{{ form.photo_video }}						
+									</td>
+									<td class="col-md-6">
+										{{ form.play_media.errors }}
+										<label class="btn btn-primary" role="button" for="{{ form.play_media.id_for_label }}">Playing Videos / Music</label>
+										{{ form.play_media }}	
+									</td>
+								</tr>
+								<tr class="col-md-12">
+									<td class="col-md-6">
+										{{ form.communicate.errors }}
+										<label class="btn btn-primary" role="button" for="{{ form.communicate.id_for_label }}">Communicating</label>
+										{{ form.communicate }}	
+									</td>
+									<td class="col-md-6">
+										{{ form.gaming.errors }}
+										<label class="btn btn-primary" role="button" for="{{ form.gaming.id_for_label }}">Gaming</label>
+										{{ form.gaming }}	
+									</td>
+								</tr>
+								<!--end of options and beginning of next button 
+								notice col-md-12 bootstrap class which is double that of the options-->
+								<tr class="col-md-12">
+									<td class="col-md-12">
+										<!--navigation button -->
+										<button type="button" class="btn btn-success" data-target="#questionCarousel" data-slide-to="2">Next</button>
+										<!--end of nav button -->
+									</td>
+								</tr>
+								<!--end of next button -->
+							</table>
+						</div>
+						<!--end of panel-body -->
+					</div>
+					<!-- end of panel -->
+				</div>
+				<!--end of carousel item #2 -->
+				
+				<!-- carousel item #3 - features filter -->
+				<div class="item" id="phoneFeatQ">
+					<!--each question has a panel-->
+					<div class="panel panel-default">
+						<!-- panel-heading that stores the question -->
+						<div class="panel-heading">
+							Do you want to filter by any of these features?
+						</div>
+						<!--end of panel-heading-->
+						
+						<!-- panel-body that stores the answer -->
+						<div class="panel-body">
+							<table>
+								<tr class="col-md-12">
+									<!--options with bootstrap col-md-4 class-->
+									<td class="col-md-6">
+										{{ form.android.errors }}
+										<label class="btn btn-primary" role="button" for="{{ form.android.id_for_label }}">Android</label>
+										{{ form.android }}						
+									</td>
+									<td class="col-md-6">
+										{{ form.ios.errors }}
+										<label class="btn btn-primary" role="button" for="{{ form.ios.id_for_label }}">iOS (Apple)</label>
+										{{ form.ios }}
+									</td>
+								</tr>
+								<tr class="col-md-12">
+									<td class="col-md-6">
+										{{ form.dual_sim.errors }}
+										<label class="btn btn-primary" role="button" for="{{ form.dual_sim.id_for_label }}">Dual Sim</label>
+										{{ form.dual_sim }}						
+									</td>
+									<td class="col-md-6">
+										{{ form.wd_resistant.errors }}
+										<label class="btn btn-primary" role="button" for="{{ form.wd_resistant.id_for_label }}">Water and Dust Resistant</label>
+										{{ form.wd_resistant }}
+									</td>
+								</tr>
+								<tr class="col-md-12">								
+									<td class="col-md-6">
+										{{ form.released_2017.errors }}
+										<label class="btn btn-primary" role="button" for="{{ form.released_2017.id_for_label }}">Released in 2017</label>
+										{{ form.released_2017 }}
+									</td>
+									<td class="col-md-6">
+										{{ form.fast_charge.errors }}
+										<label class="btn btn-primary" role="button" for="{{ form.fast_charge.id_for_label }}">Fast Charge</label>
+										{{ form.fast_charge }}
+									</td>
+								</tr>
+								<!--end of options and beginning of next button 
+								notice col-md-12 bootstrap class which is double that of the options-->
+								<tr class="col-md-12">
+									<td class="col-md-12">
+										<!--navigation button -->
+										{% buttons %}
+											<button name='submit' class="btn btn-success chickin" id="finalSubmit">Submit</button>
+										{% endbuttons %}
+										<!--end of nav button -->
+									</td>
+								</tr>
+								<!--end of next button -->
+							</table>
+							
+						</div>
+						<!--end of panel-body for carousel item #3-->
+					</div>
+					<!--end of panel for item #3-->
+				</div>
+				<!--end of carousel item #3-features filter--> 
+			</div>
+			<!--end of inner carousel -->
+		</div>
+		<!--end of carousel -->
+	</form>
+	<!--end of form wrapper -->
+	
+{% endblock content %}

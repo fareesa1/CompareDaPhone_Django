@@ -1,0 +1,8 @@
+{% extends "phones/base.html" %}
+{% load bootstrap3 %}
+
+{% block content %}
+	<div class="feedback_success_text">
+		Thank you for providing me with some feedback! Click <a href="{% url 'phones:index' %}" class="btn btn-default goFeed"><span>here</span></a> to go back to the questionnaire
+	</div>
+{% endblock content %}

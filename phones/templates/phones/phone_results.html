@@ -1,0 +1,218 @@
+<!-- shows the ranked list of phones -->
+{% extends "phones/base.html" %}
+{% load bootstrap3 %}
+
+{% block content %}
+	<ul>
+		<li><a href="#" value="0">Price</a></li>
+		<li><a href="#" value="1">Use cases</a></li>
+		<li><a href="#" value="2">Features</a></li>
+	</ul>
+
+	<!--put the list into a table -->
+	<table id="resultsTable" class="table table-hover">
+		<thead>
+			<th class="middle">Rank</th>
+			<th></th>
+			<th>Phone Name</th>
+			<th class="middle">Price</th>
+			<th class="middle">Expert Rating</th>
+			<th class="middle">Pros vs Selected Phone</th>
+			<th class="middle">Cons vs Selected Phone</th>
+		</thead>
+		<tbody>
+		{% for phone in rankedPhones %}
+			<tr data-toggle="tooltip" title="Click on the row to compare selected phone against others">
+				<!--the cycle acts as a counter - no way to easily pull using key value -->
+				<th scope="row" class="middle">{% cycle 1 2 3 4 5%}</th>
+				<td><img class="smallProdImg" src="{{phone.imgurl}}"></td>
+				<td>{{phone.name}}</td>
+				<td class="middle priceCell">
+					<div>&pound;{{phone.price}}</div>
+					<a href="{{phone.link}}" type="button" class="btn btn-danger smallBuy" target="_blank">Buy</a>
+				</td>
+				<td class="middle">{%widthratio phone.rating 1 10%}%</td>
+				<td class="compContainer"></td>
+				<td class="compContainer"></td>
+			</tr>
+		{% empty %}
+			No phones available for given budget
+		{% endfor %}
+		</tbody>
+	</table>
+	
+	<!-- hidden questionnaire from which you pop up the relevant question -->
+	<!--create a django form that renders each field individually
+	and manually in the appropriate html element -->
+	<form id="resultsForm" action="{% url 'phones:index' %}" method='post'>
+		{% csrf_token %}
+		<!--returns the list of errors that aren't associated with particular field
+		ht	tps://docs.djangoproject.com/en/1.11/ref/forms/api/#django.forms.Form.non_field_errors
+		-->
+		{{ form.non_field_errors }}
+		<!-- item #1 - budget -->
+		
+		<div class="phoneQform" id="phoneBudgetQ">
+			<!--each question has a panel-->
+			<div class="panel panel-default">
+				<!-- panel-heading that stores the question -->
+				<div class="panel-heading">
+					<span>What is your budget?</span>
+					<div class="closeButton">X</div>
+				</div>
+				<!--end of panel-heading-->
+				
+				<!-- panel-body that stores the answer -->
+				<div class="panel-body">
+					{{ form.price.errors }}
+					{{ form.price }}
+					<!--submit features button -->
+					{% buttons %}
+						<button name='submit budget' class="btn btn-success BUD" id="finalSubmit">Submit</button>
+					{% endbuttons %}
+					<!--end of submit features button -->
+				</div>
+				<!--end of panel-body -->				
+			</div>
+		</div>
+		<!-- end of item #1 -->
+
+		<!-- carousel item #2 - usage -->
+		<div class="phoneQform" id="phonePrefQ">
+			<!--each question has a panel-->
+			<div class="panel panel-default">
+				<!-- panel-heading that stores the question -->
+				<div class="panel-heading">
+					<span>What do you mostly use your phone for?</span>
+					<div class="closeButton">X</div>
+				</div>
+				<!--end of panel-heading-->
+				
+				<!-- panel-body that stores the answer -->
+				<div class="panel-body">					
+					<!-- grouped the options together with submit button in a table.
+					this helps me lay out the 4 options in a 2x2 format with the
+					next button at the bottom
+					-->
+					<table>
+						<tr class="col-md-12">
+							<!--options with bootstrap col-md-6 class-->
+							<td class="col-md-6">
+								{{ form.photo_video.errors }}
+								<label class="btn btn-primary" role="button" for="{{ form.photo_video.id_for_label }}">Taking Photos / Videos</label>
+								{{ form.photo_video }}						
+							</td>
+							<td class="col-md-6">
+								{{ form.play_media.errors }}
+								<label class="btn btn-primary" role="button" for="{{ form.play_media.id_for_label }}">Playing Videos / Music</label>
+								{{ form.play_media }}	
+							</td>
+						</tr>
+						<tr class="col-md-12">
+							<td class="col-md-6">
+								{{ form.communicate.errors }}
+								<label class="btn btn-primary" role="button" for="{{ form.communicate.id_for_label }}">Communicating</label>
+								{{ form.communicate }}	
+							</td>
+							<td class="col-md-6">
+								{{ form.gaming.errors }}
+								<label class="btn btn-primary" role="button" for="{{ form.gaming.id_for_label }}">Gaming</label>
+								{{ form.gaming }}	
+							</td>
+						</tr>
+						<!--end of options and beginning of next button 
+						notice col-md-12 bootstrap class which is double that of the options-->
+						<tr class="col-md-12">
+							<td class="col-md-12">
+								<!--submit features button -->
+								{% buttons %}
+									<button name='submit preferences' class="btn btn-success PREF" id="finalSubmit">Submit</button>
+								{% endbuttons %}
+								<!--end of submit features button -->
+							</td>
+						</tr>
+						<!--end of next button -->
+					</table>
+				</div>
+				<!--end of panel-body -->
+			</div>
+			<!-- end of panel -->
+		</div>
+		<!--end of carousel item #2 -->
+		
+		<!-- carousel item #3 - features filter -->
+		<div class="phoneQform" id="phoneFeatQ">
+			<!--each question has a panel-->
+			<div class="panel panel-default">
+				<!-- panel-heading that stores the question -->
+				<div class="panel-heading">
+					<span>Do you want to filter by any of these features?</span>
+					<div class="closeButton">X</div>
+				</div>
+				<!--end of panel-heading-->
+				
+				<!-- panel-body that stores the answer -->
+				<div class="panel-body">
+					<table>
+						<tr class="col-md-12">
+							<!--options with bootstrap col-md-4 class-->
+							<td class="col-md-6">
+								{{ form.android.errors }}
+								<label class="btn btn-primary" role="button" for="{{ form.android.id_for_label }}">Android</label>
+								{{ form.android }}						
+							</td>
+							<td class="col-md-6">
+								{{ form.ios.errors }}
+								<label class="btn btn-primary" role="button" for="{{ form.ios.id_for_label }}">iOS (Apple)</label>
+								{{ form.ios }}
+							</td>
+						</tr>
+						<tr class="col-md-12">
+							<td class="col-md-6">
+								{{ form.dual_sim.errors }}
+								<label class="btn btn-primary" role="button" for="{{ form.dual_sim.id_for_label }}">Dual Sim</label>
+								{{ form.dual_sim }}						
+							</td>
+							<td class="col-md-6">
+								{{ form.wd_resistant.errors }}
+								<label class="btn btn-primary" role="button" for="{{ form.wd_resistant.id_for_label }}">Water and Dust Resistant</label>
+								{{ form.wd_resistant }}
+							</td>
+						</tr>
+						<tr class="col-md-12">								
+							<td class="col-md-6">
+								{{ form.released_2017.errors }}
+								<label class="btn btn-primary" role="button" for="{{ form.released_2017.id_for_label }}">Released in 2017</label>
+								{{ form.released_2017 }}
+							</td>
+							<td class="col-md-6">
+								{{ form.fast_charge.errors }}
+								<label class="btn btn-primary" role="button" for="{{ form.fast_charge.id_for_label }}">Fast Charge</label>
+								{{ form.fast_charge }}
+							</td>
+						</tr>
+						<!--end of options and beginning of next button 
+						notice col-md-12 bootstrap class which is double that of the options-->
+						<tr class="col-md-12">
+							<td class="col-md-12">
+								<!--submit features button -->
+								{% buttons %}
+									<button name='submit features' class="btn btn-success FEAT" id="finalSubmit">Submit</button>
+								{% endbuttons %}
+								<!--end of submit features button -->
+							</td>
+						</tr>
+						<!--end of next button -->
+					</table>					
+				</div>
+				<!--end of panel-body for carousel item #3-->
+			</div>
+			<!--end of panel for item #3-->
+		</div>
+		<!--end of carousel item #3-features filter-->
+	</form>
+	
+	<!--produces the ranked phones with data which can then be pulled in main.js-->
+	<input type="hidden" id="rankedPhones_json" value='{{rankedPhones_json}}'>
+		
+{% endblock content %}

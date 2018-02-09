@@ -1,0 +1,241 @@
+/*CROSS-PAGES STYLING */
+/*buttons*/
+.btn {
+	width: 200px;
+	height: 50px;
+	font-weight: bold;
+	font-size: 15px;
+}
+
+/*QUESTION PANEL STYLING */
+/*styles the panel that wraps the questionnaire */
+.panel.panel-default {
+	height: 350px;
+	background-color: #f2f2f2;
+	width: 600px;
+	margin: auto;
+}
+/*heading of panel fits 15% with everything center justified and more text styling */
+.panel-heading {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 15%;
+	font-weight: bold;
+	font-size: 20px;
+	padding: 2px;
+}
+/*body of panel fits 85% of panel with everything center justified */
+.panel-body {
+	height: 85%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+/*BUDGET QUESTION STYLING */
+/*change size and position of input form */
+#phoneBudgetQ .panel-body input {
+	margin-bottom: 30px;
+	height: 50px;
+	width: 100px;
+	text-align: center;
+	font-size: 30px;
+}
+/*hide spinners*/
+#phoneBudgetQ .panel-body input {
+    -moz-appearance:textfield;
+}
+#phoneBudgetQ .panel-body input::-webkit-outer-spin-button,
+#phoneBudgetQ .panel-body input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+/*PREFERENCES AND FEATURES QUESTIONS STYLING */
+/*sets the distance between the buttons in the 2x2 table */
+#phonePrefQ td, #phoneFeatQ td {
+	padding: 5px;
+}
+/*brings the next button to the center of the table*/
+#phonePrefQ .btn-success, #phoneFeatQ .btn-success {
+	margin-left: 50%;
+	margin-top: 10px;
+}
+/*sets fixed width to table for alignment*/
+#phonePrefQ table, #phoneFeatQ table {
+	width: 420px;
+}
+/*align label in the middle and make inner text bold */
+#phonePrefQ label, #phoneFeatQ label {
+	line-height: 230%;
+	margin-bottom: 0px;
+	vertical-align: middle;
+}
+/* hide checkbox because we have label that will be highlighted when clicked */
+#phonePrefQ table td input, #phoneFeatQ table td input {
+	display: none;
+}
+
+
+/*RESULTS TABLE STYLING*/
+/*bring table cells to middle */
+#resultsTable .middle {
+	text-align: center;
+}
+/* set maximum width and align everything to center */
+#resultsTable {
+	max-width: 1200px;
+	margin-left: 50px;
+}
+/* set size of product images in results
+ * object-fit property scales the image to fit container: https://css-tricks.com/almanac/properties/o/object-fit/
+ *  */
+.smallProdImg {
+	width: 80px;
+	height: 80px;
+	object-fit: contain;
+}
+/*align vertically the rows of the table*/
+#resultsTable th, #resultsTable td {
+	vertical-align: middle;
+}
+/* set font size and boldness of tbody rows*/
+#resultsTable tbody {
+	font-size: 20px;
+	font-weight: 600;
+}
+/*set font size and boldness of the rank number cells*/
+#resultsTable tbody th {
+	font-size: 30px;
+}
+/*font size for the thead cells*/
+#resultsTable thead {
+	font-size: 15px;
+}
+/* color for the selected row*/
+.rowSelected {
+	background-color: #ccf2ff;
+}
+/*color for the hovered row*/
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+	background-color: #ffe6e6;
+	
+}
+
+/*styling for pros/cons cells*/
+.cellPros,.cellCons {
+	font-size: 15px;
+	text-align: center;
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+.cellPros {
+	color: #008000;
+}
+.cellCons {
+	color: #b32400;
+}
+/*buy button styling*/
+.smallBuy {
+	padding: 0px 0px 0px 0px;
+	margin: 5px auto 0px auto;
+	width: 75px;
+	height: 30px;
+	font-size: 15px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+/*show results forms in the middle of the page but hide them at the beginning*/
+#resultsForm {
+	 margin:0 auto;
+	 position:absolute;
+	 left:25%;
+	 top:20%;
+}
+/*hide question forms by default*/
+.phoneQform {
+	display: none;
+}
+
+.phoneQform.activeQ {
+	display: block;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100px;
+    background-color: #f1f1f1;
+    position: fixed;
+    margin-left: -60px;
+    overflow: auto;
+}
+li a, li a:hover, li a:focus {
+	text-decoration: none;
+}
+li a {
+    display: block;
+    background-color: #ffffe6;
+    padding: 30px 5px 30px 5px;
+    border-style: solid;
+    border-width: 0.1px;
+    color: black;
+}
+li a:hover {
+    background-color: #00e68a;
+    color: white;
+}
+/*close button formatting */
+.closeButton {
+	background-color: red;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 5%;
+	text-align: center;
+	cursor: pointer;
+}
+/*the button that takes you back to beginning of questionnaire
+ * align content of button in center*/
+.goStart {
+	display:flex;
+	background-color: #dfeaff;
+}
+.goStart span {
+	margin: auto;
+	color: black;
+}
+/*image in navbar*/
+/*get padding smaller so that brand image is larger */
+.navbar-brand {
+	padding: 5px;
+}
+.navbar-brand img {
+	height: 100%;
+}
+/*how to center navbar brand
+ * https://stackoverflow.com/a/27037621/7874516*/
+.navbar-header {
+   left: 50%;
+   position: relative;
+   transform: translateX(-50%);
+}
+/*feedback form settings*/
+#feedback_form {
+	width: 50%;
+	margin: 5% auto 0% auto;
+}
+.feedback_success_text {
+	font-size: 20px;
+	margin: 10% auto 0% auto;
+	width: 70%;
+	text-align: center;
+}
+.goFeed {
+	display: inline;
+	background-color: yellow;
+	font-size: 20px;
+}
